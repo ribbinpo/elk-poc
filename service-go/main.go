@@ -5,8 +5,6 @@ import (
 	"log"
 	"log/slog"
 	"os"
-
-	logs "github.com/ribbinpo/elk-poc/service-go/pkg/logs"
 )
 
 func main() {
@@ -19,14 +17,14 @@ func main() {
 	}
 	defer file.Close()
 
-	httpWriter := &logs.HttpLogWriter{
-		URL: "http://localhost:8080",
-	}
+	// httpWriter := &logs.HttpLogWriter{
+	// 	URL: "http://localhost:8080",
+	// }
 
-	multiWriter := io.MultiWriter(consoleWriter, file, httpWriter)
+	multiWriter := io.MultiWriter(consoleWriter, file)
 	logger := slog.New(slog.NewJSONHandler(multiWriter, &slog.HandlerOptions{}))
 
-	logger.Info("hello", "count", 4) // slog.Group("properties",
+	logger.Info("hello", "count", 5) // slog.Group("properties",
 	// 	slog.Int("width", 640),
 	// 	slog.Int("height", 480),
 	// 	slog.String("format", "jpeg"),

@@ -33,6 +33,7 @@ services:
     container_name: logstash
     ports:
       - 8080:8080
+      - 5001:5001
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
       - ./logstash/input:/usr/share/logstash/input
@@ -40,6 +41,17 @@ services:
     restart: always
     environment:
       - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    networks:
+      - elastic
+  filebeat:
+    depends_on:
+      - elasticsearch
+      - logstash
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    container_name: filebeat
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./service-go/logs:/src/logs:ro
     networks:
       - elastic
 volumes:
