@@ -1,10 +1,38 @@
-Basic command
+# ELK POC
+
+This is a proof of concept to do log centralize with elk stack:
+
+- elasticsearh: for searching and collect the log
+- logstash: for log pre-processing before insert log to elasticsearch
+- filebeat: detect and collect the log from application then send to logstash
+- kibana: dashboard visualization
+
+## Get Started
+
+1. Set STACK_VERSION of ELK in .env file
+2. Run docker compose
+
+```bash
+docker compose up -d
+```
+
+3. Run service-go to produce log
+
+```bash
+cd service-go && go run main.go && cd ..
+```
+
+4. Open Kibina dashboard to see the result
+   Go to: `http://localhost:5601`
+
+## Basic command for elasticsearch
 
 References:
+
 - https://www.notion.so/ribbinpo/CRUD-Command-935694d016244c4eb9d03e9e88adf2e1
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/release-highlights.html
 
-## Test tokenizer
+### Test tokenizer
 
 ```
 POST _analyze
@@ -14,7 +42,7 @@ POST _analyze
 }
 ```
 
-## Update custom default analyzer
+### Update custom default analyzer
 
 ```
 PUT myindex
@@ -52,7 +80,7 @@ PUT myindex
 }
 ```
 
-## Test create
+### Test create
 
 ```
 POST myindex/_doc/1
@@ -68,7 +96,7 @@ POST myindex/_doc/2
 }
 ```
 
-## Search
+### Search
 
 ```
 GET myindex/_search
